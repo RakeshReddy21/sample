@@ -1,0 +1,65 @@
+.kicked-out-container {
+  max-width: 500px;
+  padding: 2rem;
+}
+
+.kicked-out-icon {
+  animation: pulse 2s infinite;
+}
+
+.kicked-out-symbol {
+  font-size: 5rem;
+  line-height: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.kicked-out-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.kicked-out-message {
+  font-size: 1.1rem;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.kicked-out-actions {
+  margin-top: 2rem;
+}
+
+.intervue-btn {
+  background: linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%);
+  align-content: center;
+  color: white !important;
+  border-radius: 25px !important;
+  font-size: 1rem !important;
+}
+
+.continue-btn {
+  background: linear-gradient(99.18deg, #8F64E1 -46.89%, #1D68BD 223.45%);
+  color: white !important;
+  border-radius: 25px !important;
+  padding: 12px 30px !important;
+  font-size: 1rem !important;
+  border: none !important;
+  transition: all 0.3s ease;
+}
+
+.continue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(143, 100, 225, 0.3);
+}
+
