@@ -3,10 +3,7 @@ import stars from "../../assets/spark.svg";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-let apiUrl =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_BASE_URL
-    : "https://polling-system-server.onrender.com";
+let apiUrl = process.env.REACT_APP_API_BASE_URL || "https://polling-system-server.onrender.com";
 const LoginPage = () => {
   const [selectedRole, setSelectedRole] = useState(null);
   const navigate = useNavigate();
@@ -16,9 +13,16 @@ const LoginPage = () => {
 
   const continueToPoll = async () => {
     if (selectedRole === "teacher") {
-      let teacherlogin = await axios.post(`${apiUrl}/teacher-login`);
-      sessionStorage.setItem("username", teacherlogin.data.username);
-      navigate("/teacher-home-page");
+      try {
+        console.log("Attempting to connect to:", apiUrl);
+        let teacherlogin = await axios.post(`${apiUrl}/teacher-login`);
+        console.log("Teacher login response:", teacherlogin.data);
+        sessionStorage.setItem("username", teacherlogin.data.username);
+        navigate("/teacher-home-page");
+      } catch (error) {
+        console.error("Teacher login failed:", error);
+        alert(`Login failed: ${error.message}`);
+      }
     } else if (selectedRole === "student") {
       navigate("/student-home-page");
     } else {

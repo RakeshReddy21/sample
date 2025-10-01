@@ -4,10 +4,7 @@ import io from "socket.io-client";
 import ChatPopover from "../../components/chat/ChatPopover";
 import { useNavigate } from "react-router-dom";
 import eyeIcon from "../../assets/eye.svg";
-let apiUrl =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_BASE_URL
-    : "https://polling-system-server.onrender.com";
+let apiUrl = process.env.REACT_APP_API_BASE_URL || "https://polling-system-server.onrender.com";
 const socket = io(apiUrl);
 
 const TeacherPollPage = () => {

@@ -3,10 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import backIcon from "../../assets/back.svg";
-let apiUrl =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_BASE_URL
-    : "https://polling-system-server.onrender.com";
+let apiUrl = process.env.REACT_APP_API_BASE_URL || "https://polling-system-server.onrender.com";
 
 const PollHistoryPage = () => {
   const [polls, setPolls] = useState([]);

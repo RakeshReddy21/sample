@@ -5,18 +5,37 @@ import { io } from "socket.io-client";
 import "./Chat.css";
 import chatIcon from "../../assets/chat.svg";
 
-let apiUrl =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_API_BASE_URL
-    : "https://polling-system-server.onrender.com";
-const socket = io(apiUrl);
+let apiUrl = process.env.REACT_APP_API_BASE_URL || "https://polling-system-server.onrender.com";
+const socket = io(apiUrl, {
+  transports: ['websocket', 'polling']
+});
 
 const ChatPopover = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [participants, setParticipants] = useState([]);
+  const [connectionStatus, setConnectionStatus] = useState("connecting");
   const chatWindowRef = useRef(null);
+  
   useEffect(() => {
+    console.log("Socket connecting to:", apiUrl);
+    
+    // Connection event handlers
+    socket.on("connect", () => {
+      console.log("Socket connected successfully");
+      setConnectionStatus("connected");
+    });
+    
+    socket.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
+      setConnectionStatus("error");
+    });
+    
+    socket.on("disconnect", (reason) => {
+      console.log("Socket disconnected:", reason);
+      setConnectionStatus("disconnected");
+    });
+
     if (chatWindowRef.current) {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
@@ -32,6 +51,9 @@ const ChatPopover = () => {
     return () => {
       socket.off("participantsUpdate");
       socket.off("chatMessage");
+      socket.off("connect");
+      socket.off("connect_error");
+      socket.off("disconnect");
     };
   }, []);
   const username = sessionStorage.getItem("username");
